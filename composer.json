@@ -1,7 +1,6 @@
 {
     "name": "empari/support",
-    "description": "Empari Domain Tools, Utils and Support Package for Laravel",
-    "version": "0.1.0-alpha",
+    "description": "Domain Tools, Utils and Support Package for Laravel",
     "type": "library",
     "license": "MIT",
     "minimum-stability": "stable",
