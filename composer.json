@@ -1,0 +1,36 @@
+{
+    "name": "empari/support",
+    "description": "Empari Domain Tools, Utils and Support Package for Laravel",
+    "version": "0.1.0-alpha",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Adriano Santos",
+            "email": "adrianodrix@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "laravel/framework": "5.4.*",
+        "webpatser/laravel-uuid": "^2.0"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "~1.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Empari\\Support\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    }
+}
