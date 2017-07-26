@@ -1,7 +1,6 @@
 <?php
 namespace Empari\Support\Http\Providers;
 
-use Empari\Support\Http\Routing\RouteFile;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
@@ -39,10 +38,10 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Register Route with Class
      *
-     * @param $class
+     * @param string $class
      * @return $this
      */
-    protected function registerRouteClass(RouteFile $class)
+    protected function registerRouteClass(string $class)
     {
         (new $class([
             'namespace' => $this->namespace
