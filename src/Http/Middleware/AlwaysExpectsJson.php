@@ -1,5 +1,5 @@
 <?php
-namespace Empari\Http\Middleware;
+namespace Empari\Support\Http\Middleware;
 
 use Closure;
 
