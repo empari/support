@@ -1,6 +1,7 @@
 {
     "name": "empari/support",
     "description": "Domain Tools, Utils and Support Package for Laravel",
+    "version": "1.0.4",
     "type": "library",
     "license": "MIT",
     "minimum-stability": "stable",
@@ -12,7 +13,7 @@
     ],
     "require": {
         "php": "^7.0",
-        "laravel/framework": "5.4.*",
+        "laravel/framework": "^5.4.*",
         "webpatser/laravel-uuid": "^2.0"
     },
     "require-dev": {

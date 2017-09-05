@@ -1,0 +1,16 @@
+{
+    "name": "Support",
+    "alias": "support",
+    "description": "Domain Tools, Utils and Support Package for Laravel",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Empari\\Support\\Providers\\SupportServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}
