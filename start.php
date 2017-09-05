@@ -11,3 +11,5 @@
 | this file as you want.
 |
 */
+
+// See: https://git-scm.com/book/pt-br/v1/Ferramentas-do-Git-Subm%C3%B3dulos

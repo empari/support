@@ -1,7 +1,10 @@
-<?php
+<?php namespace Empari\Support\Providers;
 
-namespace Empari\Support\Providers;
-
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\CachedReader;
+use Doctrine\Common\Annotations\Reader;
+use Doctrine\Common\Cache\FilesystemCache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
@@ -15,6 +18,12 @@ class SupportServiceProvider extends ServiceProvider
     protected $defer = false;
 
     /**
+     * Module Name
+     * @var string
+     */
+    protected $moduleName = 'support';
+
+    /**
      * Boot the application events.
      *
      * @return void
@@ -25,6 +34,7 @@ class SupportServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->registerFactories();
+        $this->publishMigrationsAndSeeders();
     }
 
     /**
@@ -34,7 +44,7 @@ class SupportServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->registerAnnotations();
     }
 
     /**
@@ -47,6 +57,7 @@ class SupportServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../config/config.php' => config_path('support.php'),
         ], 'config');
+
         $this->mergeConfigFrom(
             __DIR__.'/../../config/config.php', 'support'
         );
@@ -107,5 +118,43 @@ class SupportServiceProvider extends ServiceProvider
     public function provides()
     {
         return [];
+    }
+
+    /**
+     * Register Annotations
+     */
+    public function registerAnnotations()
+    {
+        $loader = require base_path() .'/vendor/autoload.php';
+        AnnotationRegistry::registerLoader([$loader, 'loadClass']);
+        $this->registerAnnotationReader();
+    }
+
+    /**
+     * Register Annotations Reader
+     */
+    public function registerAnnotationReader()
+    {
+        $this->app->bind(Reader::class, function () {
+            return new CachedReader(
+                new AnnotationReader(),
+                new FilesystemCache(storage_path('framework/cache/doctrine-annotations')),
+                $debug = config('app.debug')
+            );
+        });
+    }
+
+    /**
+     * Register all migrations and seeders
+     *
+     */
+    public function publishMigrationsAndSeeders()
+    {
+        $this->publishes([
+            __DIR__.'/../../database/migrations' => database_path('migrations')
+        ], 'migrations');
+        $this->publishes([
+            __DIR__.'/../../database/seeders' => database_path('seeds')
+        ], 'seeders');
     }
 }
