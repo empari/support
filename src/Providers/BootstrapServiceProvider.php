@@ -11,6 +11,7 @@ class BootstrapServiceProvider extends ServiceProvider
         $this->registerFormGroup();
         $this->registerFormGroupInput();
         $this->registerSearch();
+        $this->registerButtonsSubmitForm();
     }
 
     public function registerError()
@@ -90,6 +91,16 @@ class BootstrapServiceProvider extends ServiceProvider
                             <span class=\"input-group-btn\">{$button}</span>
                         </div>
                     </div>";
+        });
+    }
+
+    public function registerButtonsSubmitForm()
+    {
+        \Form::macro('btnSubmit', function () {
+            return \Form::openFormGroup().
+                    \Button::primary(\Icon::floppyDisk(). ' Salvar')->submit()->addAttributes(['style' => 'margin-right: 0.5em;']).
+                    \Button::normal(\Icon::floppySaved(). ' Cancelar')->asLinkto(\URL::previous()).
+                    \Form::closeFormGroup();
         });
     }
 }
