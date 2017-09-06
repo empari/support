@@ -25,7 +25,7 @@ class PermissionReader
      */
     private function getControllers()
     {
-        foreach (config('support::path.controllers') as $path) {
+        foreach (config('empari-support.path.controllers') as $path) {
             $files = [];
             foreach (\File::allFiles($path) as $file) {
                 require_once $file->getRealPath();
@@ -42,6 +42,7 @@ class PermissionReader
     public function getPermissions()
     {
         $controllerClasses = $this->getControllers();
+
         $permissions = [];
         foreach (get_declared_classes() as $className) {
             $rc = new \ReflectionClass($className);

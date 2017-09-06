@@ -7,6 +7,7 @@ use Doctrine\Common\Annotations\Reader;
 use Doctrine\Common\Cache\FilesystemCache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Foundation\AliasLoader;
 
 class SupportServiceProvider extends ServiceProvider
 {
@@ -21,7 +22,7 @@ class SupportServiceProvider extends ServiceProvider
      * Module Name
      * @var string
      */
-    protected $moduleName = 'support';
+    protected $moduleName = 'empari-support';
 
     /**
      * Boot the application events.
@@ -30,6 +31,7 @@ class SupportServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->registerAliases();
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
@@ -45,6 +47,43 @@ class SupportServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerAnnotations();
+
+        $this->app->register(BootstrapServiceProvider::class);
+        $this->app->register(\Collective\Html\HtmlServiceProvider::class);
+        $this->app->register(\Bootstrapper\BootstrapperL5ServiceProvider::class);
+    }
+
+    protected function registerAliases()
+    {
+        // Bootstraper
+        AliasLoader::getInstance()->alias('Accordion' , \Bootstraper\Facades\Accordion::class);
+        AliasLoader::getInstance()->alias('Alert' , \Bootstraper\Facades\Alert::class);
+        AliasLoader::getInstance()->alias('Badge' , \Bootstraper\Facades\Badge::class);
+        AliasLoader::getInstance()->alias('Breadcrumb' , \Bootstraper\Facades\Breadcrumb::class);
+        AliasLoader::getInstance()->alias('Button' , \Bootstraper\Facades\Button::class);
+        AliasLoader::getInstance()->alias('ButtonGroup' , \Bootstraper\Facades\ButtonGroup::class);
+        AliasLoader::getInstance()->alias('Carousel' , \Bootstraper\Facades\Carousel::class);
+        AliasLoader::getInstance()->alias('ControlGroup' , \Bootstraper\Facades\ControlGroup::class);
+        AliasLoader::getInstance()->alias('DropdownButton' , \Bootstraper\Facades\DropdownButton::class);
+        AliasLoader::getInstance()->alias('Form' , \Bootstraper\Facades\Form::class);
+        AliasLoader::getInstance()->alias('Helpers' , \Bootstraper\Facades\Helpers::class);
+        AliasLoader::getInstance()->alias('Icon' , \Bootstraper\Facades\Icon::class);
+        AliasLoader::getInstance()->alias('InputGroup' , \Bootstraper\Facades\InputGroup::class);
+        AliasLoader::getInstance()->alias('Image' , \Bootstraper\Facades\Image::class);
+        AliasLoader::getInstance()->alias('Label' , \Bootstraper\Facades\Label::class);
+        AliasLoader::getInstance()->alias('MediaObject' , \Bootstraper\Facades\MediaObject::class);
+        AliasLoader::getInstance()->alias('Modal' , \Bootstraper\Facades\Modal::class);
+        AliasLoader::getInstance()->alias('Navbar' , \Bootstraper\Facades\Navbar::class);
+        AliasLoader::getInstance()->alias('Navigation' , \Bootstraper\Facades\Navigation::class);
+        AliasLoader::getInstance()->alias('Panel' , \Bootstraper\Facades\Panel::class);
+        AliasLoader::getInstance()->alias('ProgressBar' , \Bootstraper\Facades\ProgressBar::class);
+        AliasLoader::getInstance()->alias('Tabbable' , \Bootstraper\Facades\Tabbable::class);
+        AliasLoader::getInstance()->alias('Table' , \Bootstraper\Facades\Table::class);
+        AliasLoader::getInstance()->alias('Thumbnail' , \Bootstraper\Facades\Thumbnail::class);
+        
+        // Vendor Packages
+        AliasLoader::getInstance()->alias('Form', \Collective\Html\FormFacade::class);
+        AliasLoader::getInstance()->alias('Html', \Collective\Html\HtmlFacade::class);
     }
 
     /**
@@ -55,11 +94,11 @@ class SupportServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../../config/config.php' => config_path('support.php'),
+            __DIR__.'/../../config/config.php' => config_path($this->moduleName .'.php'),
         ], 'config');
 
         $this->mergeConfigFrom(
-            __DIR__.'/../../config/config.php', 'support'
+            __DIR__.'/../../config/config.php', $this->moduleName
         );
     }
 
@@ -70,7 +109,7 @@ class SupportServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $viewPath = resource_path('views/vendor/empari/support');
+        $viewPath = resource_path('views/vendor/empari/'. $this->moduleName);
 
         $sourcePath = __DIR__.'/../../resources/views';
 
@@ -79,8 +118,8 @@ class SupportServiceProvider extends ServiceProvider
         ]);
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
-            return $path . '/vendor/empari/support';
-        }, \Config::get('view.paths')), [$sourcePath]), 'support');
+            return $path . '/vendor/empari/'. $this->moduleName;
+        }, \Config::get('view.paths')), [$sourcePath]), $this->moduleName);
     }
 
     /**
@@ -90,12 +129,12 @@ class SupportServiceProvider extends ServiceProvider
      */
     public function registerTranslations()
     {
-        $langPath = resource_path('lang/vendor/empari/support');
+        $langPath = resource_path('lang/vendor/empari/'. $this->moduleName);
 
         if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'support');
+            $this->loadTranslationsFrom($langPath, $this->moduleName);
         } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../../resources/lang', 'support');
+            $this->loadTranslationsFrom(__DIR__ .'/../../resources/lang', $this->moduleName);
         }
     }
 

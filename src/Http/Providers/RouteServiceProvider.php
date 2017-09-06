@@ -42,9 +42,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function registerRouteClass(string $class)
     {
-        (new $class([
-            'namespace' => $this->namespace
-        ]))->register();
+        if (!app()->routesAreCached()) {
+            (new $class([
+                'namespace' => $this->namespace
+            ]))->register();
+        }
 
         return $this;
     }
