@@ -9,8 +9,6 @@
         "Empari\\Support\\Providers\\SupportServiceProvider"
     ],
     "aliases": {},
-    "files": [
-        "start.php"
-    ],
+    "files": [],
     "requires": []
 }

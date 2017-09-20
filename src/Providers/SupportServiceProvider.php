@@ -46,9 +46,17 @@ class SupportServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register(BootstrapServiceProvider::class);
-        $this->app->register(\Collective\Html\HtmlServiceProvider::class);
-        $this->app->register(\Bootstrapper\BootstrapperL5ServiceProvider::class);
+        if (class_exists(BootstrapServiceProvider::class)) {
+            $this->app->register(BootstrapServiceProvider::class);
+        }
+
+        if (class_exists(\Collective\Html\HtmlServiceProvider::class)) {
+            $this->app->register(\Collective\Html\HtmlServiceProvider::class);
+        }
+
+        if (class_exists(\Bootstrapper\BootstrapperL5ServiceProvider::class)) {
+            $this->app->register(\Bootstrapper\BootstrapperL5ServiceProvider::class);
+        }
 
         $this->registerAnnotations();
         $this->registerAliases();
@@ -57,34 +65,38 @@ class SupportServiceProvider extends ServiceProvider
     protected function registerAliases()
     {
         // Bootstraper
-        AliasLoader::getInstance()->alias('Accordion' , \Bootstrapper\Facades\Accordion::class);
-        AliasLoader::getInstance()->alias('Alert' , \Bootstrapper\Facades\Alert::class);
-        AliasLoader::getInstance()->alias('Badge' , \Bootstrapper\Facades\Badge::class);
-        AliasLoader::getInstance()->alias('Breadcrumb' , \Bootstrapper\Facades\Breadcrumb::class);
-        AliasLoader::getInstance()->alias('Button' , \Bootstrapper\Facades\Button::class);
-        AliasLoader::getInstance()->alias('ButtonGroup' , \Bootstrapper\Facades\ButtonGroup::class);
-        AliasLoader::getInstance()->alias('Carousel' , \Bootstrapper\Facades\Carousel::class);
-        AliasLoader::getInstance()->alias('ControlGroup' , \Bootstrapper\Facades\ControlGroup::class);
-        AliasLoader::getInstance()->alias('DropdownButton' , \Bootstrapper\Facades\DropdownButton::class);
-        AliasLoader::getInstance()->alias('Form' , \Bootstrapper\Facades\Form::class);
-        AliasLoader::getInstance()->alias('Helpers' , \Bootstrapper\Facades\Helpers::class);
-        AliasLoader::getInstance()->alias('Icon' , \Bootstrapper\Facades\Icon::class);
-        AliasLoader::getInstance()->alias('InputGroup' , \Bootstrapper\Facades\InputGroup::class);
-        AliasLoader::getInstance()->alias('Image' , \Bootstrapper\Facades\Image::class);
-        AliasLoader::getInstance()->alias('Label' , \Bootstrapper\Facades\Label::class);
-        AliasLoader::getInstance()->alias('MediaObject' , \Bootstrapper\Facades\MediaObject::class);
-        AliasLoader::getInstance()->alias('Modal' , \Bootstrapper\Facades\Modal::class);
-        AliasLoader::getInstance()->alias('Navbar' , \Bootstrapper\Facades\Navbar::class);
-        AliasLoader::getInstance()->alias('Navigation' , \Bootstrapper\Facades\Navigation::class);
-        AliasLoader::getInstance()->alias('Panel' , \Bootstrapper\Facades\Panel::class);
-        AliasLoader::getInstance()->alias('ProgressBar' , \Bootstrapper\Facades\ProgressBar::class);
-        AliasLoader::getInstance()->alias('Tabbable' , \Bootstrapper\Facades\Tabbable::class);
-        AliasLoader::getInstance()->alias('Table' , \Bootstrapper\Facades\Table::class);
-        AliasLoader::getInstance()->alias('Thumbnail' , \Bootstrapper\Facades\Thumbnail::class);
+        if (class_exists(\Bootstrapper\Facades\Helpers::class)) {
+            AliasLoader::getInstance()->alias('Accordion' , \Bootstrapper\Facades\Accordion::class);
+            AliasLoader::getInstance()->alias('Alert' , \Bootstrapper\Facades\Alert::class);
+            AliasLoader::getInstance()->alias('Badge' , \Bootstrapper\Facades\Badge::class);
+            AliasLoader::getInstance()->alias('Breadcrumb' , \Bootstrapper\Facades\Breadcrumb::class);
+            AliasLoader::getInstance()->alias('Button' , \Bootstrapper\Facades\Button::class);
+            AliasLoader::getInstance()->alias('ButtonGroup' , \Bootstrapper\Facades\ButtonGroup::class);
+            AliasLoader::getInstance()->alias('Carousel' , \Bootstrapper\Facades\Carousel::class);
+            AliasLoader::getInstance()->alias('ControlGroup' , \Bootstrapper\Facades\ControlGroup::class);
+            AliasLoader::getInstance()->alias('DropdownButton' , \Bootstrapper\Facades\DropdownButton::class);
+            AliasLoader::getInstance()->alias('Form' , \Bootstrapper\Facades\Form::class);
+            AliasLoader::getInstance()->alias('Helpers' , \Bootstrapper\Facades\Helpers::class);
+            AliasLoader::getInstance()->alias('Icon' , \Bootstrapper\Facades\Icon::class);
+            AliasLoader::getInstance()->alias('InputGroup' , \Bootstrapper\Facades\InputGroup::class);
+            AliasLoader::getInstance()->alias('Image' , \Bootstrapper\Facades\Image::class);
+            AliasLoader::getInstance()->alias('Label' , \Bootstrapper\Facades\Label::class);
+            AliasLoader::getInstance()->alias('MediaObject' , \Bootstrapper\Facades\MediaObject::class);
+            AliasLoader::getInstance()->alias('Modal' , \Bootstrapper\Facades\Modal::class);
+            AliasLoader::getInstance()->alias('Navbar' , \Bootstrapper\Facades\Navbar::class);
+            AliasLoader::getInstance()->alias('Navigation' , \Bootstrapper\Facades\Navigation::class);
+            AliasLoader::getInstance()->alias('Panel' , \Bootstrapper\Facades\Panel::class);
+            AliasLoader::getInstance()->alias('ProgressBar' , \Bootstrapper\Facades\ProgressBar::class);
+            AliasLoader::getInstance()->alias('Tabbable' , \Bootstrapper\Facades\Tabbable::class);
+            AliasLoader::getInstance()->alias('Table' , \Bootstrapper\Facades\Table::class);
+            AliasLoader::getInstance()->alias('Thumbnail' , \Bootstrapper\Facades\Thumbnail::class);
+        }
 
         // Vendor Packages
-        AliasLoader::getInstance()->alias('Form', \Collective\Html\FormFacade::class);
-        AliasLoader::getInstance()->alias('Html', \Collective\Html\HtmlFacade::class);
+        if (class_exists(\Collective\Html\FormFacade::class)) {
+            AliasLoader::getInstance()->alias('Form', \Collective\Html\FormFacade::class);
+            AliasLoader::getInstance()->alias('Html', \Collective\Html\HtmlFacade::class);
+        }
 
         // Packages
         AliasLoader::getInstance()->alias('NavBarAuth', \Empari\Support\Facade\NavBarAuthorizationFacade::class);
@@ -196,6 +208,7 @@ class SupportServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../database/migrations' => database_path('migrations')
         ], 'migrations');
+
         $this->publishes([
             __DIR__.'/../../database/seeders' => database_path('seeds')
         ], 'seeders');

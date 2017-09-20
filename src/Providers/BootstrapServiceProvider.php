@@ -6,12 +6,14 @@ class BootstrapServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->registerCheckBox();
-        $this->registerError();
-        $this->registerFormGroup();
-        $this->registerFormGroupInput();
-        $this->registerSearch();
-        $this->registerButtonsSubmitForm();
+        if (class_exists(\Form::class)) {
+            $this->registerCheckBox();
+            $this->registerError();
+            $this->registerFormGroup();
+            $this->registerFormGroupInput();
+            $this->registerSearch();
+            $this->registerButtonsSubmitForm();
+        }
     }
 
     public function registerError()
