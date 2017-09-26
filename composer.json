@@ -6,13 +6,13 @@
     "minimum-stability": "stable",
     "authors": [
         {
-            "name": "Adriano Santos",
-            "email": "adrianodrix@gmail.com"
+            "name": "Team #EGI",
+            "email": "suporte@empari.com.br"
         }
     ],
     "require": {
         "php": "^7.0",
-        "laravel/framework": "5.4.*",
+        "laravel/framework": "5.5.*",
         "webpatser/laravel-uuid": "^2.0"
     },
     "require-dev": {
