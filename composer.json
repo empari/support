@@ -2,10 +2,14 @@
     "name": "empari/support",
     "description": "Domain Tools, Utils and Support Package for Laravel",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "version": "1.0.5",
 =======
     "version": "1.0.6",
 >>>>>>> release/1.0.6
+=======
+    "version": "1.0.7",
+>>>>>>> release/1.0.7
     "type": "library",
     "license": "MIT",
     "minimum-stability": "stable",
@@ -30,8 +34,12 @@
         "laravel/framework": "^5.5",
         "laravelcollective/html": "^5.5",
         "webpatser/laravel-uuid": "^2.0",
+<<<<<<< HEAD
         "patricktalmadge/bootstrapper": "^5.10",
 >>>>>>> release/1.0.5
+=======
+        "patricktalmadge/bootstrapper": "^5.10"
+>>>>>>> release/1.0.7
     },
     "require-dev": {
         "caouecs/laravel-lang": "~3.0",
