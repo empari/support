@@ -1,7 +1,11 @@
 {
     "name": "empari/support",
     "description": "Domain Tools, Utils and Support Package for Laravel",
+<<<<<<< HEAD
     "version": "1.0.5",
+=======
+    "version": "1.0.6",
+>>>>>>> release/1.0.6
     "type": "library",
     "license": "MIT",
     "minimum-stability": "stable",
